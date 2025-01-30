@@ -1,7 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Task Dashboard</title>
+{% extends "base.html" %}
+
+{% block head_title %}Task Dashboard - {{ block.super }}{% endblock %}
+
+{% block content %}
+    <div class="header">
+        <h1>Task Results Dashboard</h1>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="{% url 'register_user' %}">Registration</a>
+        </div>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Task ID</th>
+            <th>Status</th>
+            <th>Result</th>
+            <th>Date Done</th>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            <td class="task-id">{{ task.task_id }}</td>
+            <td>
+                <span class="status {% if task.status == 'SUCCESS' %}success{% elif task.status == 'FAILURE' %}error{% endif %}">
+                    {{ task.status }}
+                </span>
+            </td>
+            <td>
+                <div class="result">
+                    {% with result=task.result %}
+                        <div class="result-row">
+                            <span class="result-label">Email:</span>
+                            <span class="result-value">{{ result.email }}</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Type:</span>
+                            <span class="result-value welcome">{{ result.type }}</span>
+                        </div>
+                        <div class="result-row">
+                            <span class="result-label">Message:</span>
+                            <span class="result-value">{{ result.message }}</span>
+                        </div>
+                    {% endwith %}
+                </div>
+            </td>
+            <td class="date">{{ task.date_done|date:"M j, Y, g:i a" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="empty-message">No tasks found in the last 24 hours.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endblock %}
+
+
+
+{% block head_styles %}
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -136,56 +191,4 @@
             font-style: italic;
         }
     </style>
-</head>
-<body>
-    <div class="header">
-        <h1>Task Results Dashboard</h1>
-        <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="{% url 'register_user' %}">Registration</a>
-        </div>
-    </div>
-    
-    <table>
-        <tr>
-            <th>Task ID</th>
-            <th>Status</th>
-            <th>Result</th>
-            <th>Date Done</th>
-        </tr>
-        {% for task in tasks %}
-        <tr>
-            <td class="task-id">{{ task.task_id }}</td>
-            <td>
-                <span class="status {% if task.status == 'SUCCESS' %}success{% elif task.status == 'FAILURE' %}error{% endif %}">
-                    {{ task.status }}
-                </span>
-            </td>
-            <td>
-                <div class="result">
-                    {% with result=task.result %}
-                        <div class="result-row">
-                            <span class="result-label">Email:</span>
-                            <span class="result-value">{{ result.email }}</span>
-                        </div>
-                        <div class="result-row">
-                            <span class="result-label">Type:</span>
-                            <span class="result-value welcome">{{ result.type }}</span>
-                        </div>
-                        <div class="result-row">
-                            <span class="result-label">Message:</span>
-                            <span class="result-value">{{ result.message }}</span>
-                        </div>
-                    {% endwith %}
-                </div>
-            </td>
-            <td class="date">{{ task.date_done|date:"M j, Y, g:i a" }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4" class="empty-message">No tasks found in the last 24 hours.</td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+    {% endblock %}

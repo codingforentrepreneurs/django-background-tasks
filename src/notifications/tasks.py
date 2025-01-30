@@ -1,10 +1,12 @@
-from django_qstash import shared_task
+from django.apps import apps
+from celery import shared_task
 import json
-from django.core.mail import send_mail
-from django.conf import settings
+# from django.core.mail import send_mail
+# from django.conf import settings
 
 @shared_task
 def send_welcome_notification(user_email):
+    Notification = apps.get_model('notifications', 'Notification')
     try:
         # Simulate sending welcome email
         print(f"Sending welcome email to {user_email}")
@@ -16,6 +18,9 @@ def send_welcome_notification(user_email):
         #     [user_email],
         #     fail_silently=False,
         # )
+        Notification.objects.create(
+            email=user_email
+        )
         
         return json.dumps({
             "status": "success",
@@ -33,9 +38,14 @@ def send_welcome_notification(user_email):
 
 @shared_task
 def send_reminder_notification(user_email):
+    Notification = apps.get_model('notifications', 'Notification')
     try:
         # Simulate sending reminder
         print(f"Sending reminder to {user_email}")
+
+        Notification.objects.create(
+            email=user_email
+        )
         # In a real app, you'd use:
         # send_mail(
         #     'Don\'t forget to complete your profile!',

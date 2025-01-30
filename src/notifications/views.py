@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django_qstash.results.models import TaskResult
+from django_celery_results.models import TaskResult
+# from django_qstash.results.models import TaskResult
 from django.utils import timezone
 from .tasks import send_welcome_notification, send_reminder_notification
 import json

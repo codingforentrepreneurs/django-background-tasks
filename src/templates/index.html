@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Hello, <span class="gradient-text">Django Background Tasks!</span></h1>
+        <p>Test running background tasks with Django.</p>
+        
+        <a href="{% url 'register_user' %}" class="try-button">Try Notifications App →</a>
+
+    </div>
+    {% endblock %}
