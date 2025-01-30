@@ -6,7 +6,7 @@ scripts:
   beat:
     - cd src && ../venv/bin/celery -A cfehome beat -l info
   docker_up:
-    - docker compose up -d
+    - docker compose up
   docker_down:
     - docker compose down
   docker_down_forever:
