@@ -5,3 +5,9 @@ scripts:
     - cd src && ../venv/bin/celery -A cfehome worker -l info
   beat:
     - cd src && ../venv/bin/celery -A cfehome beat -l info
+  docker_up:
+    - docker compose up -d
+  docker_down:
+    - docker compose down
+  docker_down_forever:
+    - docker compose down -v
