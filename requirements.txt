@@ -1,0 +1,8 @@
+Django
+Celery
+Redis
+django-celery-beat 
+django-celery-results
+python-dotenv
+dj-database-url
+psycopg[binary] # psycopg3, use psycopg2-binary if you need psycopg2
